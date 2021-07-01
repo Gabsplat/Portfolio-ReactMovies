@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 
+
+// EXTERNAL IMPORTS
 import{ 
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from 'react-router-dom';
+import styled from 'styled-components'
 
+
+// PÁGINAS
 import Home from "./pages/home";
 
+
+// COMPONENTES
 import SearchBar from './components/SearchBar';
 
-import styled from 'styled-components'
+// ASSETS
 import logo from './assets/images/logo.svg'
-
-
-
 
 
 function App() {
@@ -30,7 +34,7 @@ function App() {
   `
 
   const Logo = styled.img`
-        width: 14em;
+        width: 12em;
   `
 
   const Navbar = styled.div`
@@ -41,19 +45,19 @@ function App() {
   `
 
   return(
-    <BackgroundWrapper>
+    <Router>
+      <BackgroundWrapper>
         <Navbar>
           <Logo src={logo}/>
-          <SearchBar />
+          <SearchBar key="searchBar"/>
         </Navbar>
-        <Router>
-          <Route>
+        <Switch>
+          <Route path="/">
             <Home/>
           </Route>
-          {/* <Route>
-          </Route> */}
-        </Router>
-    </BackgroundWrapper>
+        </Switch>
+      </BackgroundWrapper>
+    </Router>
   );
 }
 

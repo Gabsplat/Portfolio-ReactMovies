@@ -9,8 +9,9 @@ const SearchBody = styled.div`
     padding: 0.4em 0.8em;
     margin: 0.5em;
     background: transparent;
-    border: .2em solid  #4D4B55;
-    border-radius: 3px;
+    border: .2em solid  #182224;
+
+    border-radius: .6em;
 
     width: 28%;
 
@@ -23,10 +24,11 @@ const Input = styled.input`
     display: flex;
     background: transparent;
 
-    color: #ebebeb;
+    color: #2BEBC8;
+
 
     &::placeholder{
-        color: #4D4B55;
+        color: #2BEBC8;
     }
 
     font-size: 1.1em;
@@ -39,7 +41,7 @@ const Input = styled.input`
 ` 
 
 const SearchIcon = styled.img`
-    color: #565664;
+    color: #2BEBC8;
     width: 1.6em;
 `
 

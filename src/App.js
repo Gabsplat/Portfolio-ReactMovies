@@ -20,12 +20,14 @@ import SearchBar from './components/SearchBar';
 
 // ASSETS
 import logo from './assets/images/logo.svg'
+import './assets/styles/main.css'
 
 
 function App() {
 
   const BackgroundWrapper = styled.div`
-        background: linear-gradient(to right, #5c258d, #4389a2); 
+        /* background-color: #0E1213; */
+        background: linear-gradient(to right top, #101617, #161616); 
         width: 100%;
         height: 100%;
         padding: 1em 4em;
@@ -42,6 +44,7 @@ function App() {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 1.4em;
   `
 
   return(

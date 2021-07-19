@@ -54,10 +54,12 @@ function SearchBar() {
     }
 
     return (
-        <SearchBody>
-            <Input type="text" key="searchBar2" value={inputValue} placeholder="Search" onChange={changeInputValue} />
-            <SearchIcon src={searchIconSvg}/>
-        </SearchBody>
+        <>
+            <SearchBody className="searchBody">
+                <Input type="text" key="searchBar2" value={inputValue} placeholder="Search" onChange={changeInputValue} />
+                <SearchIcon src={searchIconSvg}/>
+            </SearchBody>
+        </>
     )
 }
 

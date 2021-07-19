@@ -14,12 +14,13 @@ import logo from '../assets/images/logo.svg'
 import lucaTest from "../assets/images/luka.jpg"
 import avengersBg from "../assets/images/AvengersEndgame.jpg"
 import mkBg from "../assets/images/Mk.jpg"
+import searchIconSvg from '../assets/images/searchIcon.svg'
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
 // STYLES
 const Logo = styled.img`
-    width: 12em;
+    width: 20vh;
 `
 
 const Navbar = styled.div`
@@ -29,17 +30,55 @@ const Navbar = styled.div`
     align-items: center;
     padding: 1.4em 2em;
     box-sizing: border-box;  
+
+    & #searchIconMobile{
+        display: none;
+    }
+
+    @media screen and (max-width: 48em){
+        flex-wrap: wrap;
+        /* padding: 1.4em 1em; */
+        padding: 3vh 2vh;
+
+
+        & .searchBody{
+            width: 100%;
+            display: ${props => {
+                if(props.navActive){
+                    return "flex"
+                }
+                return "none"
+            }};
+        }
+        
+        & #searchIconMobile{
+            display: block;
+        }
+
+        
+    }
+`
+
+const SearchIcon = styled.img`
+    width: 5vh;
 `
 
 const MovieTitle = styled.h1`
-    font-size: clamp(2em, 3em, 4em);
+    font-size: 7vh;
     font-weight: 900;
+    text-align: center;
     color: #FFF;
     padding: 0;
-    margin-bottom: 0;
+    margin-bottom: 1%;
+
+    @media screen and (max-width: 768px) {
+        margin-bottom: 5%;
+    }
 `
 
 function HeaderMovies(props) {
+
+    const [navActive, setNavActive] = useState(false);
 
     const movies = [
         {
@@ -56,45 +95,29 @@ function HeaderMovies(props) {
         }
     ];
 
+    const toggleSearch = () => {
+        setNavActive(!navActive)
+    }
+
     return (
         <>
-            <Navbar style={{position: 'absolute', margin: '0 auto', zIndex: 2}}>
+            <Navbar navActive={navActive} style={{position: 'absolute', margin: '0 auto', zIndex: 2}}>
                 <Logo src={logo}/>
-                <SearchBar key="searchBar"/>
+                <SearchIcon id="searchIconMobile" onClick={toggleSearch} src={searchIconSvg}/>
+                <SearchBar id="searchBar" key="searchBar"/>
             </Navbar>
-            <Swiper key={1}  autoplay={{delay: 5000}} allowTouchMove={false} navigation pagination style={{height: '50%', borderBottomRightRadius: 30, borderBottomLeftRadius: 30}} onSlideChange={() => console.log('slide change')} onSwiper={(swiper) => console.log(swiper)}>
+            <Swiper key={1}  autoplay={{delay: 5000}} allowTouchMove={false} navigation pagination style={{height: '60%', borderBottomRightRadius: 30, borderBottomLeftRadius: 30}} onSlideChange={() => console.log('slide change')} onSwiper={(swiper) => console.log(swiper)}>
                 {movies.map(movie => {
                     return(
                         <SwiperSlide>
                             <div style={{position:'relative', display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: 'flex-end', height: '100%'}}>
                                 <div style={{position: 'absolute', backgroundImage: `url(${movie.background})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.8, height: "100%", width: "100%", zIndex: -1}}></div>
-                                <MovieTitle style={{marginBottom: '1%'}}>{movie.title}</MovieTitle>
+                                <MovieTitle>{movie.title}</MovieTitle>
                             </div>
                         </SwiperSlide>
                     )
                 })}
-                {/* <SwiperSlide>
-                    <div style={{position:'relative', display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: 'flex-end', height: '100%'}}>
-                        <div style={{position: 'absolute', backgroundImage: `url(${avengersBg})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.8, height: "100%", width: "100%", zIndex: -1}}></div>
-                        <MovieTitle style={{marginBottom: '1%'}}>Avengers</MovieTitle>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div style={{position:'relative', display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: 'flex-end', height: '100%'}}>
-                        <div style={{position: 'absolute', backgroundImage: `url(${lucaTest})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.8, height: "100%", width: "100%", zIndex: -1}}></div>
-                        <MovieTitle style={{marginBottom: '1%'}}>Luca</MovieTitle>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div style={{position:'relative', display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: 'flex-end', height: '100%'}}>
-                        <div style={{position: 'absolute', backgroundImage: `url(${mkBg})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.8, height: "100%", width: "100%", zIndex: -1}}></div>
-                        <MovieTitle style={{marginBottom: '1%'}}>Mortal Kombat</MovieTitle>
-                    </div>
-                </SwiperSlide> */}
-                
-
             </Swiper>
-            {/* <HeaderMovies /> */}
         </>
     )
 }

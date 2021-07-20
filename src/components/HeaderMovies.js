@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import styled from 'styled-components'
 
@@ -69,10 +70,11 @@ const MovieTitle = styled.h1`
     text-align: center;
     color: #FFF;
     padding: 0;
-    margin-bottom: 1%;
+    margin-bottom: 3vh;
 
-    @media screen and (max-width: 768px) {
-        margin-bottom: 5%;
+    @media screen and (max-width: 48em) {
+        margin-bottom: 6vh;
+        font-size: 5vh
     }
 `
 
@@ -106,13 +108,23 @@ function HeaderMovies(props) {
                 <SearchIcon id="searchIconMobile" onClick={toggleSearch} src={searchIconSvg}/>
                 <SearchBar id="searchBar" key="searchBar"/>
             </Navbar>
-            <Swiper key={1}  autoplay={{delay: 5000}} allowTouchMove={false} navigation pagination style={{height: '60%', borderBottomRightRadius: 30, borderBottomLeftRadius: 30}} onSlideChange={() => console.log('slide change')} onSwiper={(swiper) => console.log(swiper)}>
-                {movies.map(movie => {
+            <Swiper className="swiperHeader" key={1}  autoplay={{delay: 5000}} allowTouchMove={false} navigation pagination style={{height: '50vh', borderBottomRightRadius: 30, borderBottomLeftRadius: 30}}>
+                {movies.map((movie, i) => {
                     return(
-                        <SwiperSlide>
+                        <SwiperSlide key={i}>
                             <div style={{position:'relative', display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: 'flex-end', height: '100%'}}>
                                 <div style={{position: 'absolute', backgroundImage: `url(${movie.background})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.8, height: "100%", width: "100%", zIndex: -1}}></div>
-                                <MovieTitle>{movie.title}</MovieTitle>
+                                <Link to={{
+                                        pathname: `/movie/${123}`,
+                                        state: {
+                                            title: "Luca"
+                                        }
+                                    }}
+                                    
+                                    style={{textDecoration: 'none'}}
+                                >
+                                    <MovieTitle>{movie.title}</MovieTitle>
+                                </Link>
                             </div>
                         </SwiperSlide>
                     )

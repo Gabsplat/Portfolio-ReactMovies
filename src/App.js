@@ -13,13 +13,14 @@ import styled from 'styled-components'
 
 // PÁGINAS
 import Home from "./pages/home";
+import Movie from "./pages/movie";
 
 
 //ASSETS
 import './assets/styles/main.css'
 
-const BackgroundWrapper = styled.div`
-    background-color: #0A070C;
+const Background = styled.div`
+    background-color: rgb(18, 4, 31);
     /* background: linear-gradient(to right top, #101617, #161616);  */
     width: 100%;
     height: 100vh;
@@ -31,13 +32,16 @@ function App() {
 
   return(
     <Router className="App">
-      <BackgroundWrapper>
+      <Background>
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <Home/>
           </Route>
+          <Route path="/movie/:movieId">
+            <Movie />
+          </Route>
         </Switch>
-      </BackgroundWrapper>
+      </Background>
     </Router>
   );
 }

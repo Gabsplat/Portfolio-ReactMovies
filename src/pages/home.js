@@ -4,28 +4,35 @@ import styled, { keyframes }from 'styled-components'
 
 // COMPONENTES
 import HeaderMovies from '../components/HeaderMovies'
+import CardCarousel from '../components/CardCarousel'
 
 import SearchBar from '../components/SearchBar';
 import logo from '../assets/images/logo.svg'
 
-
-
-
-
 const Wrapper = styled.div`
     width: 90%;
-    height: 100%;
     position: relative;
     margin: 0 auto;
+`
+
+const Title = styled.h1`
+    font-size: 5vh;
+    font-weight: 900;
+    color: #FFF;
+    padding: 0;
+    margin-bottom: 0;
 `
 
 function Home() {
 
     return (
-        <Wrapper>
-            <HeaderMovies />
-            {/* {headerImages.length !== 0 && <HeaderMovies imgs={headerImages} />} */}
-        </Wrapper>
+        <>
+            <Wrapper>
+                <HeaderMovies />
+                <Title>Popular movies</Title>
+            </Wrapper>
+            <CardCarousel />
+        </>
     )
 }
 

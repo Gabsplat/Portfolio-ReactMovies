@@ -3,3 +3,38 @@
     font-family: 'Nunito', sans-serif;
     
 }
+
+/* .swiper-button-next, .swiper-button-prev {
+    display: none;
+    color: rgba(0, 0, 0, 0.212);
+} */
+
+.swiper-button-prev {
+    display: none;
+    color: rgba(0, 0, 0, 0.212);
+}
+
+.swiperHeader .swiper-button-next{
+    display: none;
+    color: rgba(0, 0, 0, 0.212);
+}
+
+.swiperHeader .swiper-pagination-bullet{
+    opacity: 0.5;
+    background-color: #fff;
+}
+
+.swiperHeader .swiper-pagination-bullet-active{
+    opacity: 1;
+    background-color: #fff;
+}
+
+.swiperCards .swiper-button-next::after{
+    color: white;
+    /* font-family: Roboto;
+    content: '✨' */
+}
+
+.cardSwiper{
+    width: 24vh;
+}

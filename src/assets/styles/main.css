@@ -4,10 +4,6 @@
     
 }
 
-/* .swiper-button-next, .swiper-button-prev {
-    display: none;
-    color: rgba(0, 0, 0, 0.212);
-} */
 
 .swiper-button-prev {
     display: none;
@@ -35,6 +31,19 @@
     content: '✨' */
 }
 
+.swiperCards .swiper-wrapper{
+    padding: 3.2vh 0;
+}
+
 .cardSwiper{
     width: 24vh;
+    transition: all 0.2s;
+}
+
+.cardSwiper:hover{
+    transition: all 0.2s;
+
+    transform: scale(1.2);
+    margin-left: 3vh;
+    margin-right: 4vh !important;
 }

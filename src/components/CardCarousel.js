@@ -19,7 +19,7 @@ SwiperCore.use([Pagination,Navigation]);
 
 const CardDiv = styled.div`
     height: 33vh;
-    border-radius: 3vh;
+    border-radius: 2.5vh;
     background: url(${(props) => {return props.coverImage}});
     background-position: center;
     background-size: cover;
@@ -27,7 +27,7 @@ const CardDiv = styled.div`
 `
 
 const SwiperWrapper = styled.div`
-    margin: 2vh 0 0 0;
+    margin: 0;
     width: 100%;
 
 `
@@ -37,15 +37,18 @@ let cardName = 1
 function CardCarousel() {
     return (
         <SwiperWrapper>
-            <Swiper slidesPerView={'auto'} watchSlidesVisibility={true} spaceBetween={10} loop={true} navigation centeredSlides={true} className="mySwiper swiperCards">
+            <Swiper slidesPerView={'auto'} zoom={{maxRatio: 5}} watchSlidesVisibility={true} spaceBetween={10} loop={true} navigation centeredSlides={true} className="mySwiper swiperCards">
                 {([0, 1, 2, 3, 4, 5, 6, 7, 8]).map((el, i) =>{
-                    return <SwiperSlide key={i} className="cardSwiper"><Link to={{
+                    return(
+                    <SwiperSlide key={i} className="cardSwiper"><Link to={{
                         pathname: `/movie/${123}`,
                         state: {
                             title: "Luca"
                         }
-                    }}><CardDiv coverImage={lucaTest}/></Link></SwiperSlide>
-                    })
+                    }}>
+                        <CardDiv coverImage={lucaTest}/></Link>
+                    </SwiperSlide>
+                    )})
                 }
             </Swiper>
         </SwiperWrapper>

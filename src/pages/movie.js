@@ -9,6 +9,8 @@ import logo from '../assets/images/logo.svg'
 import searchIconSvg from '../assets/images/searchIcon.svg'
 import SearchBar from '../components/SearchBar';
 
+import lucaTest from '../assets/images/luka.jpg'
+
 // STYLES
 const Logo = styled.img`
     width: 20vh;
@@ -56,8 +58,21 @@ const Navbar = styled.div`
     }
 `
 
-const SearchIcon = styled.img`
-    width: 5vh;
+const PageContent = styled.div`
+    display: flex;
+    max-width: 100%;
+    min-height: 80vh;
+    flex-direction: row;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #fff;
+
+`
+
+const RightContent = styled.div`
+    background-color: #fff;
+    height: 100px;
+    width: 100%;
 `
 
 function Movie(props) {
@@ -72,14 +87,14 @@ function Movie(props) {
     const movieInfo = location.state;
     return (
         <Wrapper>
-            <Navbar navActive={navActive}>
-                <Link to="/"><Logo src={logo}/></Link>
-                <SearchIcon id="searchIconMobile" onClick={toggleSearch} src={searchIconSvg}/>
-                <SearchBar id="searchBar" key="searchBar"/>
-            </Navbar>
-            <h1>Peli:</h1>
-            <h1>{movieInfo.title}</h1>
-            <h1>{movieId}</h1>
+            <PageContent>
+                <div style={{backgroundColor: 'blue',width: '35%', height:'100%'}}>
+                    test
+                </div>
+                <RightContent style={{width: '65%'}}>
+                    <h1>test</h1>
+                </RightContent>
+            </PageContent>
         </Wrapper>
     )
 }

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
-import styled, { keyframes }from 'styled-components'
+import styled, { keyframes }from 'styled-components';
 
 // COMPONENTES
-import HeaderMovies from '../components/HeaderMovies'
-import CardCarousel from '../components/CardCarousel'
+import HeaderMovies from '../components/HeaderMovies';
+import CardCarousel from '../components/CardCarousel';
+import Navbar from '../components/Navbar';
 
 import SearchBar from '../components/SearchBar';
-import logo from '../assets/images/logo.svg'
+import logo from '../assets/images/logo.svg';
 
 const Wrapper = styled.div`
     width: 90%;
@@ -16,7 +17,7 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.h1`
-    font-size: 5vh;
+    font-size: 4vh;
     font-weight: 900;
     color: #FFF;
     padding: 0;

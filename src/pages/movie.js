@@ -30,6 +30,7 @@ const PageContent = styled.main`
     width: 100%;
 
     @media screen and (max-width: 1024px) {
+        height: 100%;
         flex-direction: column;
     }
 `
@@ -44,8 +45,8 @@ const LeftContent = styled.aside`
     @media screen and (min-width: 1024px) {
         background-size: cover;
         background-position: center;
-        height: 100%;
         width: 30%;
+        height: 100%;
     }
 `
 
@@ -58,6 +59,8 @@ const RightContent = styled.section`
     width: 68%;
     height: auto;
     box-sizing: border-box;
+
+    
 
     @media screen and (max-width: 1024px) {
         margin-top: 1.25rem;
@@ -131,6 +134,30 @@ const TrailerButton = styled.button`
         margin-left: auto;
         bottom: 0;
         right: 0;
+    }
+`
+
+const BodyText = styled.p`
+    margin: 0;
+    width: 100%;
+    margin-bottom: 2vh;
+    
+    @media screen and (min-width: 500px) {
+        width: 65%;
+        margin-bottom: 0;
+    }
+`
+
+const Genres = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    
+    @media screen and (min-width: 500px) {
+        margin-top: 1vh;
+        margin-bottom: 2%;
     }
 `
 
@@ -222,14 +249,14 @@ function Movie(props) {
                         <ColoredBadge textColor="black" color="#FFDF40" href={"https://www.imdb.com/title/" + movie.imdb_id} target="_blank">
                             <p>View on IMDb</p>
                         </ColoredBadge>
-                        <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginTop: '1vh', marginBottom: '2%'}}>
+                        <Genres>
                             <h3 style={{fontSize: '1.1em', margin: 0, fontWeight: '700'}}>GENRES:</h3>
                             {movie.genres?.map(val => {
                                 return <GenreBadge key={val.id}>{val.name}</GenreBadge>
                             })}
-                        </div>
+                        </Genres>
                         <h2 style={{fontSize: '1.4em', fontWeight: '800', margin: 0}}>SYNOPSIS</h2>
-                        <p style={{width: '65%', margin: 0}}>{movie.overview}</p>
+                        <BodyText>{movie.overview}</BodyText>
 
                         <TrailerButton onClick={openModal}>WATCH TRAILER</TrailerButton>
                     </>

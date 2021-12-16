@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import styled from 'styled-components'
 
@@ -34,7 +34,7 @@ const SearchBody = styled.form`
         position: absolute;
         height: 7vh;
         width: calc(100% - 2em);
-        display: none;
+        display: ${(props) => props.navActive ? 'flex' : 'none'};
     }
 `
 
@@ -86,6 +86,7 @@ const SearchButton = styled.button`
 function SearchBar(props) {
 
     const [inputValue, setInputValue] = useState("");
+    const [searched, setSearched] = useState(false);
     
     const history = useHistory();
 
@@ -99,11 +100,16 @@ function SearchBar(props) {
         if(inputValue !== ""){
             history.push(`/search/${inputValue}`);
         }
+        setSearched(false);
     }
+
+    useEffect(() => {
+        setSearched(props.navActive);
+    }, [props.navActive]);
 
     return (
         <>
-            <SearchBody onSubmit={handleSubmit}>
+            <SearchBody navActive={searched} onSubmit={handleSubmit}>
                 <Input type="text" key="searchBar2" value={inputValue} placeholder="Search for a movie..." onChange={changeInputValue} />
                 <SearchButton>
                     <IconContext.Provider value={{color: '#cabcbb', size: '1.5em', style: {cursor: 'pointer'}}}>

@@ -1,4 +1,4 @@
-import API_KEY from './api'
+import { API_KEY } from './api'
 
 export const getMovieById = (id) => {
     return fetch("https://api.themoviedb.org/3/movie/" + id + "?api_key=" + API_KEY + "&language=en-US")
@@ -16,6 +16,7 @@ export const getTrailerId = (id) => {
         return response.json();
     })
     .then(data => {
+        console.log(data);
         let filteredData = data.results.find(obj => obj.site === "YouTube" && obj.type === "Trailer");
         if(filteredData === undefined) {
             return "dQw4w9WgXcQ";

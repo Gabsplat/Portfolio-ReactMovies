@@ -30,6 +30,12 @@ const SearchCard = styled.div`
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    transition: transform .1s ease-in-out;
+
+    &:hover{
+        transition: transform .1s ease-in-out;
+        transform: scale(.98);
+    }
 `
 
 const SearchCardNoBg = styled.div`
@@ -61,7 +67,7 @@ function Search() {
                 setIsLoading(false);
                 console.log(data.results);
             })
-    }, params);
+    }, [params]);
 
 
     return (

@@ -13,7 +13,10 @@ import styled from 'styled-components';
 // PÁGINAS
 import Home from "./pages/Home";
 import Movie from "./pages/Movie";
+
+// COMPONENTES
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 
 //ASSETS
@@ -23,7 +26,7 @@ import Search from './pages/Search';
 const Background = styled.div`
     background-color: #0F0B1E;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     box-sizing: border-box;
     overflow: auto;
 `
@@ -38,7 +41,7 @@ const Wrapper = styled.div`
     left: 0;
 `
 
-const RouteWithNavbar = ({absolute, exact, stickyNav, path, component:Component}) => {
+const RouteWithNavbar = ({absolute, exact, stickyNav, path, component: Component}) => {
   return(
     <Route exact={exact} path={path}>
       <Wrapper sticky={stickyNav}>
@@ -58,6 +61,7 @@ function App() {
           <RouteWithNavbar absolute={false} exact={false} stickyNav={true} path='/search/:query' component={Search}/>
           <RouteWithNavbar absolute={false} exact={false} path='/movie/:movieId' component={Movie}/>
         </Switch>
+        <Footer />
       </Background>
     </Router>
   );

@@ -5,12 +5,20 @@ import styled from 'styled-components'
 import logo from '../assets/images/logo.svg'
 
 import SearchBar from '../components/SearchBar';
-import searchIconSvg from '../assets/images/searchIcon.svg'
 
+import { IoSearch as SearchIcon } from 'react-icons/io5';
+import { IconContext } from "react-icons";
+
+import { Link } from 'react-router-dom';
 
 // STYLES
-const Logo = styled.img`
-    width: 20vh;
+const Logo = styled.h1`
+    font-size: 4em;
+    font-weight: 800;
+    margin: 0;
+    padding: 0;
+    color: white;
+    underline: none;
 `
 
 const NavStyled = styled.div`
@@ -20,26 +28,20 @@ const NavStyled = styled.div`
     align-items: center;
     padding: 1.4em 2em;
     box-sizing: border-box;  
+    min-height: 100%;
+    height: auto;
+    z-index: 3;
+    position: ${props => props.isAbsolute ? 'absolute' : props.isSticky ? 'sticky' : 'relative'};
+    top: 0;
+    left: 0;
 
     & #searchIconMobile{
         display: none;
     }
 
-    @media screen and (max-width: 48em){
+    @media screen and (max-width: 1024px){
         flex-wrap: wrap;
-        /* padding: 1.4em 1em; */
         padding: 3vh 2vh;
-
-
-        & .searchBody{
-            width: 100%;
-            display: ${props => {
-                if(props.navActive){
-                    return "flex"
-                }
-                return "none"
-            }};
-        }
         
         & #searchIconMobile{
             display: block;
@@ -49,11 +51,7 @@ const NavStyled = styled.div`
     }
 `
 
-const SearchIcon = styled.img`
-    width: 5vh;
-`
-
-function Navbar() {
+function Navbar(props) {
 
     const [navActive, setNavActive] = useState(false);
 
@@ -61,12 +59,15 @@ function Navbar() {
         setNavActive(!navActive)
     }
 
-
     return (
-        <NavStyled navActive={navActive} style={{position: 'absolute', zIndex: 2}}>
-            <Logo src={logo}/>
-            <SearchIcon id="searchIconMobile" onClick={toggleSearch} src={searchIconSvg}/>
-            <SearchBar id="searchBar" key="searchBar"/>
+        <NavStyled isSticky={props.sticky} isAbsolute={props.absolute} navActive={navActive} style={{zIndex: 2}}>
+            <Link style={{ textDecoration: 'none' }} to="/">
+                <Logo>Moove</Logo>
+            </Link>
+            <IconContext.Provider value={{color: 'white', size: '2em', style: {cursor: 'pointer'}}}>
+                <SearchIcon id="searchIconMobile" onClick={toggleSearch}/>
+            </IconContext.Provider>
+            <SearchBar navActive={navActive} id="searchBar" key="searchBar"/>
         </NavStyled>
     )
 }

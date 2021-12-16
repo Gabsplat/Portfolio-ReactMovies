@@ -25,14 +25,30 @@ const Title = styled.h1`
 `
 
 function Home() {
+    const [movies, setMovies] = useState([]);
+
+    useEffect(() => {
+        fetch("https://api.themoviedb.org/3/movie/popular?api_key=2124e5c8e952a88bda6db8c13e5846ea&language=en-US&page=1")
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                setMovies(data.results);
+            })
+            .catch(e => {
+                // if error occurs on fetch..
+                console.log('Error')
+                console.log(e);
+            });
+    },[]);
 
     return (
         <>
             <Wrapper>
-                <HeaderMovies />
+                <HeaderMovies movies={movies.slice(0, 3)}/>
                 <Title>Popular movies</Title>
             </Wrapper>
-            <CardCarousel />
+            <CardCarousel movies={movies.slice(0, 10)}/>
         </>
     )
 }

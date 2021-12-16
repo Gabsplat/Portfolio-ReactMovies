@@ -1,11 +1,11 @@
-import React from 'react'
+import {useEffect, useState} from 'react'
 
 /* EXTERNAL LIBS */
 import { Swiper, SwiperSlide} from "swiper/react"
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import styled from 'styled-components'
 
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 /* EXTERNAL STYLES */
 import "swiper/swiper.min.css";
@@ -17,10 +17,12 @@ import lucaTest from '../assets/images/luka.jpg'
 
 SwiperCore.use([Pagination,Navigation]);
 
+const CARD_WIDTH = 'w342';
+
 const CardDiv = styled.div`
-    height: 33vh;
+    height: 100%;
     border-radius: 2.5vh;
-    background: url(${(props) => {return props.coverImage}});
+    background: url(${(props) => {return 'https://image.tmdb.org/t/p/' + CARD_WIDTH + props.coverImage}});
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -29,29 +31,44 @@ const CardDiv = styled.div`
 const SwiperWrapper = styled.div`
     margin: 0;
     width: 100%;
-
 `
 
-let cardName = 1
+function CardCarousel(props) {
+    const history = useHistory();
 
-function CardCarousel() {
     return (
-        <SwiperWrapper>
-            <Swiper slidesPerView={'auto'} zoom={{maxRatio: 5}} watchSlidesVisibility={true} spaceBetween={10} loop={true} navigation centeredSlides={true} className="mySwiper swiperCards">
-                {([0, 1, 2, 3, 4, 5, 6, 7, 8]).map((el, i) =>{
-                    return(
-                    <SwiperSlide key={i} className="cardSwiper"><Link to={{
-                        pathname: `/movie/${123}`,
-                        state: {
-                            title: "Luca"
+        <>
+            <SwiperWrapper>
+                <Swiper 
+                    allowTouchMove={true} 
+                    watchSlidesVisibility={true} 
+                    loop={true} 
+                    loopedSlides={19}
+                    watchOverflow={true}
+                    centeredSlides={true}
+                    navigation 
+                    initialSlide={1}
+                    spaceBetween={10}
+                    className={"mySwiper swiperCards"}
+                    slidesPerView={"auto"}
+                    breakpoints={{
+                        992:{
+                            centeredSlides: false,
+                            allowTouchMove: false,
+                            spaceBetween: 15
                         }
-                    }}>
-                        <CardDiv coverImage={lucaTest}/></Link>
-                    </SwiperSlide>
-                    )})
-                }
-            </Swiper>
-        </SwiperWrapper>
+                    }}
+                >
+                    {props.movies.map((movie, i) =>{
+                        return(
+                            <SwiperSlide key={i} onClick={() => {history.push(`/movie/${movie.id}`, { movieObj: movie })}} className="cardSwiper">
+                                <CardDiv id="card" coverImage={movie.poster_path}/>
+                            </SwiperSlide>
+                        )
+                    })}
+                </Swiper>
+            </SwiperWrapper>
+        </>
     )
 }
 

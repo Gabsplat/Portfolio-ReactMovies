@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import styled from 'styled-components'
 
@@ -10,53 +10,29 @@ import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css"
 
-// ASSETS
-import lucaTest from "../assets/images/luka.jpg"
-import avengersBg from "../assets/images/AvengersEndgame.jpg"
-import mkBg from "../assets/images/Mk.jpg"
-
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
+const Container = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+`
+
 function HeaderMovies(props) {
-
-
-    const movies = [
-        {
-            title: "Avengers: Endgame",
-            background: avengersBg
-        },
-        {
-            title: "Luca",
-            background: lucaTest
-        },
-        {
-            title: "Mortal Kombat X",
-            background: mkBg
-        }
-    ];
-
-    
-
+    const history = useHistory();
     return (
         <>
-            <Swiper className="swiperHeader" key={1}  autoplay={{delay: 5000}} allowTouchMove={false} navigation pagination style={{height: '50vh', borderBottomRightRadius: 30, borderBottomLeftRadius: 30}}>
-                {movies.map((movie, i) => {
+            <Swiper className="swiperHeader" key={1}  autoplay={{delay: 5000}} allowTouchMove={false} navigation pagination style={{height: '50vh', zIndex: 1, borderBottomRightRadius: 30, borderBottomLeftRadius: 30}}>
+                {props.movies.map((movie, i) => {
                     return(
                         <SwiperSlide key={i}>
-                            <div style={{position:'relative', display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: 'flex-end', height: '100%'}}>
-                                <div style={{position: 'absolute', backgroundImage: `url(${movie.background})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.8, height: "100%", width: "100%", zIndex: -1}}></div>
-                                <Link to={{
-                                        pathname: `/movie/${123}`,
-                                        state: {
-                                            title: "Luca"
-                                        }
-                                    }}
-                                    
-                                    style={{textDecoration: 'none'}}
-                                >
-                                    <h1>{movie.title}</h1>
-                                </Link>
-                            </div>
+                            <Container>
+                                <div style={{position: 'absolute', backgroundImage: `url(${"https://image.tmdb.org/t/p/original" + movie.backdrop_path})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: .8, height: "100%", width: "100%", zIndex: -1}}></div>
+                                <h1 onClick={() => { history.push(`/movie/${movie.id}`, { movieObj: movie }) }} style={{fontSize: '2.3em',color: '#fff', cursor: 'pointer', textAlign: 'center', margin: 0, textDecoration: 'none', marginBottom: '.7em', fontFamily: 'Asap'}}>{movie.title.toUpperCase()}</h1>
+                            </Container>
                         </SwiperSlide>
                     )
                 })}

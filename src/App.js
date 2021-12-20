@@ -23,15 +23,7 @@ import Footer from './components/Footer';
 import './assets/styles/main.css';
 import Search from './pages/Search';
 
-const Background = styled.div`
-    background-color: #0F0B1E;
-    width: 100vw;
-    min-height: 100vh;
-    box-sizing: border-box;
-    overflow: auto;
-`
-
-const Wrapper = styled.div`
+const HeaderWrapped = styled.header`
     width: 90%;
     margin: 0 auto;
     position: ${(props) => props.sticky ? 'sticky' : 'relative'};
@@ -44,10 +36,10 @@ const Wrapper = styled.div`
 const RouteWithNavbar = ({absolute, exact, stickyNav, path, component: Component}) => {
   return(
     <Route exact={exact} path={path}>
-      <Wrapper sticky={stickyNav}>
+      <HeaderWrapped sticky={stickyNav}>
         <Navbar absolute={absolute}/>
-      </Wrapper>
-      <Component/>
+      </HeaderWrapped>
+      <Component />
     </Route>
   )
 }
@@ -55,14 +47,12 @@ const RouteWithNavbar = ({absolute, exact, stickyNav, path, component: Component
 function App() {
   return(
     <Router className="App">
-      <Background>
         <Switch>
           <RouteWithNavbar absolute exact path='/' component={Home}/>
           <RouteWithNavbar absolute={false} exact={false} stickyNav={true} path='/search/:query' component={Search}/>
           <RouteWithNavbar absolute={false} exact={false} path='/movie/:movieId' component={Movie}/>
         </Switch>
         <Footer />
-      </Background>
     </Router>
   );
 }

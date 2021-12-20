@@ -11,16 +11,28 @@ import Modal from 'react-modal';
 import { IconContext } from 'react-icons'
 import { IoIosArrowBack } from 'react-icons/io'
 import { AiOutlineClose } from 'react-icons/ai'
+import { MdOutlineImageNotSupported } from 'react-icons/md'
 import { getMovieById, getTrailerId } from '../utils/movieCRUD'
 
 // STYLES
-const Wrapper = styled.div`
+const Wrapper = styled.main`
     width: 86%;
     position: relative;
     margin: 0 auto;
+    display: flex;
+    height: 79vh;
+    min-height: 79vh;
+    flex-direction: row;
+    box-sizing: border-box;
+    color: white;
+
+    @media screen and (max-width: 1024px) {
+        height: 100%;
+        flex-direction: column;
+    }
 `
 
-const PageContent = styled.main`
+const PageContent = styled.div`
     display: flex;
     height: 79vh;
     min-height: 79vh;
@@ -49,6 +61,7 @@ const LeftContent = styled.aside`
         height: 100%;
     }
 `
+
 
 const RightContent = styled.section`
     position: relative;
@@ -137,6 +150,28 @@ const TrailerButton = styled.button`
     }
 `
 
+const DisabledButton = styled.button`
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+    padding: .5em .7em;
+    background-color: gray;
+    border: 0;
+    border-radius: .8em;
+    color: white;
+    font-weight: 900;
+    font-size: 1.5em;
+    display: block;
+
+    @media screen and (max-width: 1024px) {
+        margin-top: .5rem;
+        position: relative;
+        margin-left: auto;
+        bottom: 0;
+        right: 0;
+    }
+`
+
 const BodyText = styled.p`
     margin: 0;
     width: 100%;
@@ -161,11 +196,22 @@ const Genres = styled.div`
     }
 `
 
+const MainLoaderWrapped = styled(ContentLoader)`
+    width: 100%;
+    height: auto;
+    
+    @media screen and (min-width: 1024px) {
+        width: auto;
+        height: 100%;
+    }
+`
+
 Modal.setAppElement('#root');
 
 function Movie(props) {
     const [movie, setMovie] = useState({});
     const [trailerId, setTrailerId] = useState("");
+    const [trailerAvailable, setTrailerAvailable] = useState(true);
     const [isLoading, setLoading] = useState(true);
     const [isImageLoading, setImageLoading] = useState(true);
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -179,7 +225,7 @@ function Movie(props) {
     }
     
     function closeModal() {
-    setIsOpen(false);
+        setIsOpen(false);
     }
     
     useEffect(() => {
@@ -198,13 +244,16 @@ function Movie(props) {
         
         getTrailerId(id)
             .then(data => {
-                setTrailerId(data);
+                if(data === null){
+                    setTrailerAvailable(false);
+                } else{
+                    setTrailerId(data);
+                }
             }); 
     }, []);
     
     return (
         <Wrapper>
-            <PageContent>
                 <LeftContent>
                     {isImageLoading &&
                     <ContentLoader style={{width: '100%', height: '100%', borderRadius: '.8em'}}
@@ -216,8 +265,26 @@ function Movie(props) {
                     >
                         <rect x="-16" y="-9" rx="0" ry="0" width="5000" height="5000" />
                     </ContentLoader>
+                    }   
+                    {movie.backdrop_path ?
+                        <img 
+                            alt={movie.title + " poster"} 
+                            onLoad={() => { setImageLoading(false); }} 
+                            style={{display: isImageLoading ? 'none' : 'block',width: '100%', height: '100%', objectFit: "cover", borderRadius: '.8em'}} 
+                            src={'https://image.tmdb.org/t/p/original' + movie.backdrop_path} 
+                        />
+                        :                
+                        movie.poster_path ?
+                            <img 
+                                alt={movie.title + " poster"} 
+                                onLoad={() => { setImageLoading(false); }} 
+                                style={{display: isImageLoading ? 'none' : 'block',width: '100%', height: '100%', objectFit: "cover", borderRadius: '.8em'}} 
+                                src={'https://image.tmdb.org/t/p/original' + movie.poster_path} 
+                            />
+                        :
+                        !isLoading && <NoImageAvailable isImageLoading={isImageLoading} setImageLoading={setImageLoading}/>
                     }
-                    <img alt={movie.title + " poster"} onLoad={() => { setImageLoading(false); }} style={{display: isImageLoading ? 'none' : 'block',width: '100%', height: '100%', objectFit: "cover", borderRadius: '.8em'}} src={'https://image.tmdb.org/t/p/original' + movie.backdrop_path} />
+                    
                 </LeftContent>
                 <RightContent>
                     <IconContext.Provider 
@@ -246,9 +313,11 @@ function Movie(props) {
                             <p>TMDb</p>
                             <p style={{marginLeft: '4px', fontWeight: 'normal'}}>{movie.vote_average}</p>
                         </ColoredBadge>
+                        {movie.imdb_id !== null &&
                         <ColoredBadge textColor="black" color="#FFDF40" href={"https://www.imdb.com/title/" + movie.imdb_id} target="_blank">
                             <p>View on IMDb</p>
                         </ColoredBadge>
+                        }
                         <Genres>
                             <h3 style={{fontSize: '1.1em', margin: 0, fontWeight: '700'}}>GENRES:</h3>
                             {movie.genres?.map(val => {
@@ -258,12 +327,15 @@ function Movie(props) {
                         <h2 style={{fontSize: '1.4em', fontWeight: '800', margin: 0}}>SYNOPSIS</h2>
                         <BodyText>{movie.overview}</BodyText>
 
+                        {trailerAvailable ?
                         <TrailerButton onClick={openModal}>WATCH TRAILER</TrailerButton>
+                        :
+                        <DisabledButton>NO TRAILER AVAILABLE</DisabledButton>
+                        }
                     </>
                     }
                     
                 </RightContent>
-            </PageContent>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -287,9 +359,42 @@ function Movie(props) {
     )
 }
 
+const NoImgDiv = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    border-radius: 2.5vh;
+    display: ${props => {
+        console.log("Props Loaidng: ", props.loading)
+        if(props.loading){
+            return 'none'
+        }
+        return 'flex'
+    }};
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`
+
+const NoImageAvailable = ({ isImageLoading, setImageLoading }) => {
+
+    useEffect(() => {
+        setImageLoading(false);
+    }, [])
+
+    return(
+        <NoImgDiv loading={isImageLoading}>
+            <IconContext.Provider value={{color: 'black', size: '1em'}}>
+                <MdOutlineImageNotSupported />
+            </IconContext.Provider>
+            <p>No Image Available</p>
+        </NoImgDiv>
+    )
+}
+
 const MainLoader = () => {
     return(
-        <ContentLoader 
+        <MainLoaderWrapped 
             speed={4}
             width={476}
             height={500}
@@ -305,7 +410,7 @@ const MainLoader = () => {
             <rect x="0" y="113" rx="8" ry="8" width="431" height="22" /> 
             <rect x="0" y="165" rx="8" ry="8" width="91" height="25" /> 
             <rect x="0" y="197" rx="8" ry="8" width="438" height="219" />
-        </ContentLoader>
+        </MainLoaderWrapped>
     )
 }
 

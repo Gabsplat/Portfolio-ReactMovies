@@ -37,38 +37,37 @@ function CardCarousel(props) {
     const history = useHistory();
 
     return (
-        <>
-            <SwiperWrapper>
-                <Swiper 
-                    allowTouchMove={true} 
-                    watchSlidesVisibility={true} 
-                    loop={true} 
-                    loopedSlides={19}
-                    watchOverflow={true}
-                    centeredSlides={true}
-                    navigation 
-                    initialSlide={1}
-                    spaceBetween={10}
-                    className={"mySwiper swiperCards"}
-                    slidesPerView={"auto"}
-                    breakpoints={{
-                        992:{
-                            centeredSlides: false,
-                            allowTouchMove: false,
-                            spaceBetween: 15
-                        }
-                    }}
-                >
-                    {props.movies.map((movie, i) =>{
-                        return(
-                            <SwiperSlide key={i} onClick={() => {history.push(`/movie/${movie.id}`, { movieObj: movie })}} className="cardSwiper">
-                                <CardDiv id="card" coverImage={movie.poster_path}/>
-                            </SwiperSlide>
-                        )
-                    })}
-                </Swiper>
-            </SwiperWrapper>
-        </>
+        <SwiperWrapper>
+            <Swiper 
+                allowTouchMove={true} 
+                watchSlidesVisibility={true} 
+                loop={true} 
+                loopedSlides={19}
+                watchOverflow={true}
+                centeredSlides={true}
+                navigation 
+                initialSlide={1}
+                spaceBetween={10}
+                className={"mySwiper swiperCards"}
+                slidesPerView={"auto"}
+                breakpoints={{
+                    992:{
+                        centeredSlides: false,
+                        allowTouchMove: false,
+                        spaceBetween: 15,
+                        slidesOffsetBefore: 50
+                    }
+                }}
+            >
+                {props.movies.map((movie, i) =>{
+                    return(
+                        <SwiperSlide key={i} onClick={() => {history.push(`/movie/${movie.id}`, { movieObj: movie })}} className="cardSwiper">
+                            <CardDiv id="card" coverImage={movie.poster_path}/>
+                        </SwiperSlide>
+                    )
+                })}
+            </Swiper>
+        </SwiperWrapper>
     )
 }
 

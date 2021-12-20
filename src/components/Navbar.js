@@ -21,7 +21,7 @@ const Logo = styled.h1`
     underline: none;
 `
 
-const NavStyled = styled.div`
+const NavStyled = styled.header`
     width: 100%;
     display: flex;
     justify-content: space-between;

@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 import styled, { keyframes }from 'styled-components';
 
+import { getUpcomingMovies, getTopRatedMovies, getPopularMovies } from '../utils/movieCRUD';
+
 // COMPONENTES
 import HeaderMovies from '../components/HeaderMovies';
 import CardCarousel from '../components/CardCarousel';
-import Navbar from '../components/Navbar';
+import GenreCarousel from '../components/GenreCarousel';
 
-import SearchBar from '../components/SearchBar';
-import logo from '../assets/images/logo.svg';
+const Main = styled.main`
+`
 
 const Wrapper = styled.div`
     width: 90%;
@@ -17,61 +19,57 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.h1`
-    font-size: 4vh;
+    font-size: 3vh;
     font-weight: 900;
     color: #FFF;
     padding: 0;
-    margin-bottom: 0;
-
-    @media screen and (max-width: 1024px) {
-        font-size: 3vh;
-    }
 `
 
+const MovieRow = ({ title, movie }) => {
+
+    return(
+        <>
+            <Wrapper>
+                <Title style={{marginTop: '5vh', marginBottom: '1vh'}}>{title}</Title>
+            </Wrapper>
+            <CardCarousel movies={movie.slice(0, 10)} />
+        </>
+    )
+}
+
 function Home() {
-    const [movies, setMovies] = useState([]);
-    const [movies2, setMovies2] = useState([]);
+    const [popularMovies, setPopularMovies] = useState([]);
+    const [upcomingMovies, setUpcomingMovies] = useState([]);
+    const [topRatedMovies, setTopRatedMovies] = useState([]);
 
     useEffect(() => {
-        fetch("https://api.themoviedb.org/3/movie/popular?api_key=2124e5c8e952a88bda6db8c13e5846ea&language=en-US&page=1")
-            .then(response => {
-                return response.json();
-            })
+
+        getPopularMovies()
             .then(data => {
-                setMovies(data.results);
-            })
-            .catch(e => {
-                // if error occurs on fetch..
-                console.log('Error')
-                console.log(e);
+                setPopularMovies(data.results);
             });
 
-        fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=2124e5c8e952a88bda6db8c13e5846ea&language=en-US&page=1")
-            .then(response => {
-                return response.json();
-            })
+        getUpcomingMovies()
             .then(data => {
-                setMovies2(data.results);
-            })
-            .catch(e => {
-                // if error occurs on fetch..
-                console.log('Error')
-                console.log(e);
+                setUpcomingMovies(data.results);
+            });
+
+        getTopRatedMovies()
+            .then(data => {
+                setTopRatedMovies(data.results);
             });
     },[]);
 
     return (
-        <>
+        <Main>
             <Wrapper>
-                <HeaderMovies movies={movies.slice(0, 3)}/>
-                <Title>Popular movies</Title>
+                <HeaderMovies movies={popularMovies.slice(0, 3)}/>
+                {/* <GenreCarousel /> */}
             </Wrapper>
-            <CardCarousel movies={movies.slice(0, 10)}/>
-            <Wrapper>
-                <Title>Top Rated movies</Title>
-            </Wrapper>
-            <CardCarousel movies={movies2.slice(0, 10)}/>
-        </>
+            <MovieRow title={'Popular movies'} movie={popularMovies}/>
+            <MovieRow title={'Upcoming movies'} movie={upcomingMovies}/>
+            <MovieRow title={'Top Rated movies'} movie={topRatedMovies}/>
+        </ Main>
     )
 }
 

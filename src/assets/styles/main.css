@@ -8,6 +8,12 @@
 #root {
     overflow-x: hidden;
     position: relative;
+    background-color: #090513;
+    width: 100vw;
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow: auto;
+    color: #494257;
 }
 
 @font-face {
@@ -17,7 +23,12 @@
 }
 
 
-.swiper-button-prev {
+/* .swiper-button-prev {
+    display: none;
+    color: rgba(0, 0, 0, 0.212);
+} */
+
+.swiperHeader .swiper-button-prev {
     display: none;
     color: rgba(0, 0, 0, 0.212);
 }
@@ -37,10 +48,12 @@
     background-color: #fff;
 }
 
+.swiperCards .swiper-button-prev::after{
+    color: white;
+}
+
 .swiperCards .swiper-button-next::after{
     color: white;
-    /* font-family: Roboto;
-    content: '✨' */
 }
 
 .swiperCards .swiper-wrapper{
@@ -50,16 +63,34 @@
 
 .cardSwiper{
     width: min(50vw, 25vh);
-    /* width: 190px; */
-    /* height: 300px; */
     height: 38vh;
     cursor: pointer;
     transition: all 0.2s;
 }
 
+.swiperGenres .swiper-button-prev::after{
+    color: white;
+}
+
+.swiperGenres .swiper-button-next::after{
+    color: white;
+}
+
+.swiperGenres .swiper-wrapper{
+    padding: 1vh 0;
+}
+
+.genreSwiper{
+    width: min(50vw, 25vh);
+    height: 15vh;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+
 
 .cardSwiper:hover #card{
-    box-shadow: inset 0px 0px 0px 3px rgba(255, 255, 255, 0.39);  
+    box-shadow: inset 0px 0px 0px 3px rgba(255, 255, 255, 0.76);  
 }
 
 .Modal{
@@ -106,6 +137,28 @@
         width: 50vw;
         height: 65vh;
     }
+
+    .swiperCards .swiper-button-prev::after{
+        padding: 10vh 2vh;
+        opacity: 0;
+        transition: opacity .2s linear;
+    }
+    
+    .swiperCards .swiper-button-prev:hover:after{
+        transition: opacity .2s linear;
+        opacity: 1;
+    }
+
+    .swiperCards .swiper-button-next::after{
+        padding: 10vh 2vh;
+        opacity: 0;
+        transition: opacity .2s linear;
+    }
+    
+    .swiperCards .swiper-button-next:hover:after{
+        transition: opacity .2s linear;
+        opacity: 1;
+    }
 }
 
 
@@ -120,5 +173,22 @@
 }
 
 
+#fetchMoreButton {
+    animation-name: fetchMore;
+    animation-duration: .3s;
+    animation-timing-function: ease-in-out;
+}
 
+#fetchMoreButton:hover{
+    transform: none;
+}
 
+@keyframes fetchMore {
+    0% {transform: translateY(0)}
+    25% {transform: translateY(.5vh)}
+    35% {transform: translateY(1vh)}
+    45% {transform: translateY(1.5vh)}
+    55% {transform: translateY(1vh)}
+    75% {transform: translateY(.5vh)}
+    100% {transform: translateY(0)}
+}

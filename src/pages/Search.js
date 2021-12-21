@@ -27,6 +27,7 @@ const SearchCard = styled.div`
     height: 300px;
     width: 200px;
     cursor: pointer;
+    margin: 0 auto;
     border-radius: 2.5vh;
     background: url(${(props) => {return 'https://image.tmdb.org/t/p/' + CARD_WIDTH + props.coverImage}});
     background-position: center;
